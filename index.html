@@ -34,10 +34,12 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 ::selection{background:var(--lime);color:var(--lime-ink)}
 
-/* фоновые пятна — статичные, вшиты в документ */
+/* фоновые пятна — статичные, максимально деликатные */
 .deco{position:absolute;border-radius:50%;pointer-events:none;z-index:0;mix-blend-mode:multiply}
-.deco-r{width:46vmax;height:46vmax;top:-12vmax;right:-16vmax;background:radial-gradient(circle at 40% 40%,rgba(207,249,164,.5),rgba(207,249,164,.12) 62%,transparent 72%)}
-.deco-b{width:42vmax;height:42vmax;top:58%;left:-16vmax;background:radial-gradient(circle at 60% 40%,rgba(164,235,249,.55),rgba(164,235,249,.12) 62%,transparent 72%)}
+.deco-r{width:46vmax;height:46vmax;top:-12vmax;right:-16vmax;
+  background:radial-gradient(circle at 40% 40%,rgba(207,249,164,.18),rgba(207,249,164,.05) 62%,transparent 72%)}
+.deco-b{width:42vmax;height:42vmax;top:58%;left:-16vmax;
+  background:radial-gradient(circle at 60% 40%,rgba(164,235,249,.20),rgba(164,235,249,.06) 62%,transparent 72%)}
 
 /* ===== ГЛАВНЫЙ ЭКРАН ===== */
 main{position:relative;z-index:5}
@@ -61,15 +63,6 @@ h1{font:800 clamp(2.4rem,5.6vw,4.4rem)/1.04 var(--disp);letter-spacing:-.01em;te
 .resume-link{align-self:center;font:600 12px var(--mono);letter-spacing:.06em;color:var(--muted);border-bottom:1px dashed var(--cyan-deep);padding-bottom:2px;transition:.2s}
 .resume-link:hover{color:var(--cyan-deep)}
 .meta{margin-top:26px;font:500 12px var(--mono);color:var(--muted);letter-spacing:.05em;display:flex;flex-wrap:wrap;gap:8px 18px}
-
-/* sparkline */
-.live{margin-top:34px;display:inline-flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 18px;box-shadow:0 8px 24px rgba(20,26,34,.05)}
-.live .lab{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:110px;line-height:1.5}
-.live svg{display:block}
-.spark{stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.6s cubic-bezier(.22,.61,.36,1) .4s}
-.in .spark{stroke-dashoffset:0}
-.spark-dot{animation:blink 1.8s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* ===== ДИАГРАММА ВЕННА ===== */
 .viz{position:relative}
@@ -138,7 +131,7 @@ h1{font:800 clamp(2.4rem,5.6vw,4.4rem)/1.04 var(--disp);letter-spacing:-.01em;te
 .use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
 .u-item{padding:28px 30px 8px 28px;border-left:1px solid var(--line);transition:.3s}
 .u-item:first-child{border-left:0;padding-left:0}
-.u-item:hover .u-num{color:var(--lime-deep);-webkit-text-stroke:1px var(--lime-deep);transform:translateY(-2px)}
+.u-item:hover .u-num{color:var(--lime);-webkit-text-stroke:1px var(--lime);transform:translateY(-2px)}
 .u-num{font:700 2rem var(--disp);color:transparent;-webkit-text-stroke:1px rgba(20,26,34,.35);
   transition:color .35s ease,-webkit-text-stroke .35s ease,transform .35s ease;display:block;margin-bottom:12px}
 .u-item h3{font:700 1.02rem var(--disp);margin-bottom:10px}
@@ -168,7 +161,6 @@ footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0}
 }
 @media(max-width:640px){
   .wrap{padding:0 20px}
-  .live{width:100%;justify-content:space-between}
   .x-badge{width:38px;height:38px;font-size:16px}
   .bub .t{max-width:66%}
 }
@@ -176,7 +168,6 @@ footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   [data-rv]{opacity:1;transform:none}
-  .spark{stroke-dashoffset:0}
   .fx .imp-bar i{width:var(--w)}
 }
 </style>
@@ -194,21 +185,13 @@ footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0}
       <h1><span id="scr" data-text="Михаил Иванчук">Михаил Иванчук</span></h1>
       <p class="sub">данные → решения → результат</p>
       <p class="open"><i class="pulse"></i>открыт к предложениям</p>
-      <p class="lead">Строю дашборды, которыми ежедневно пользуются <b>150+ сотрудников банка</b>, автоматизирую процессы взыскания и нахожу резервы роста в стратегиях через ad-hoc аналитику.</p>
+      <p class="lead">Строю дашборды, которыми ежедневно пользуются <b>150+ сотрудников банка</b>, автоматизирую процессы взыскания на Python + SQL и нахожу резервы роста в стратегиях через ad-hoc аналитику.</p>
       <div class="cta">
         <a class="btn solid" href="https://t.me/m3owboy" target="_blank" rel="noopener">TELEGRAM · @m3owboy</a>
         <a class="btn ghost" href="mailto:m3owboy@yandex.ru">m3owboy@yandex.ru</a>
         <a class="resume-link" href="mailto:m3owboy@yandex.ru?subject=Запрос полного резюме">запросить полное резюме →</a>
       </div>
       <p class="meta"><span>Москва</span><span>2 года опыта</span><span>офис / гибрид / удалёнка</span><span>+7 916 478-72-43</span></p>
-      <div class="live fx" data-rv style="--d:250ms">
-        <span class="lab">Портфель · конверсия взыскания, динамика</span>
-        <svg viewBox="0 0 240 44" width="240" height="44" aria-hidden="true">
-          <line x1="0" y1="36" x2="240" y2="36" stroke="rgba(20,26,34,.12)" stroke-dasharray="3 4"/>
-          <path class="spark" pathLength="100" d="M0 34 L22 30 L44 32 L66 24 L88 26 L110 18 L132 21 L154 12 L176 16 L198 8 L220 11 L240 5" fill="none" stroke="#0F6E88" stroke-width="2" stroke-linecap="round"/>
-          <circle class="spark-dot" cx="240" cy="5" r="3.2" fill="#4C7A1F"/>
-        </svg>
-      </div>
     </div>
 
     <!-- ДИАГРАММА ВЕННА -->
