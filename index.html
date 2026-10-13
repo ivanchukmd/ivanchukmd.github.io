@@ -6,7 +6,7 @@
 <title>Михаил Иванчук — бизнес-аналитик · визитка</title>
 <meta name="description" content="Михаил Иванчук — бизнес-аналитик (Collection/NPL). Дашборды для 150+ сотрудников банка, автоматизация на Python + SQL, 1560 часов сэкономлено руководству.">
 
-<script>try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark')}}catch(e){}</script>
+<script>try{var t=localStorage.getItem('theme');if(t!=='light'){document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}</script>
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141A22'/%3E%3Ccircle cx='25' cy='32' r='15' fill='%23CFF9A4' fill-opacity='.92'/%3E%3Ccircle cx='39' cy='32' r='15' fill='%23A4EBF9' fill-opacity='.8'/%3E%3C/svg%3E">
 
@@ -18,7 +18,7 @@
 <meta property="og:description" content="Дашборды для 150+ сотрудников банка, автоматизация на Python + SQL и 1560 часов, сэкономленных руководству. Диаграмма Венна вместо обычного резюме.">
 <meta property="og:url" content="https://ivanchukmd.github.io/">
 <meta property="og:image" content="https://ivanchukmd.github.io/preview.png">
-<meta name="theme-color" content="#F6F7F4" id="metaTheme">
+<meta name="theme-color" content="#0E1116" id="metaTheme">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,6 +103,15 @@ html.dark .kick .r-co{color:var(--lime-text)}
 .kick s{text-decoration:none;color:var(--muted)}
 
 h1{font:800 clamp(2.4rem,5.6vw,4.4rem)/1.04 var(--disp);letter-spacing:-.01em;text-transform:uppercase}
+/* перелив имени по пасхалке */
+#scr{display:inline-block}
+#scr.name-gradient{
+  background:linear-gradient(90deg,var(--lime-deep),var(--cyan-deep),var(--lime-deep));
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:txtflow 2.5s linear infinite;
+}
 .sub{font:700 clamp(1.05rem,1.9vw,1.35rem) var(--disp);margin-top:14px;color:var(--text);min-height:1.4em}
 .sub .caret{display:inline-block;width:.08em;background:var(--text);margin-left:2px;animation:blink 1s step-end infinite}
 @keyframes blink{50%{opacity:0}}
@@ -170,10 +179,11 @@ html.dark .venn-outline.or{stroke:rgba(111,207,227,.45)}
 .cluster.state-right .ripple.rr{animation:svgring 1.3s ease-out infinite}
 @keyframes svgring{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.18)}}
 
-.bub{position:absolute;top:4%;width:54%;aspect-ratio:1;z-index:2;pointer-events:none;background:transparent;
+/* пузырь кликабелен; круглая форма и обрезка держат волну внутри шарика */
+.bub{position:absolute;top:4%;width:54%;aspect-ratio:1;z-index:2;background:transparent;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;padding:16px;
-  transition:color .4s ease}
-.bub .n{font:800 clamp(1.9rem,4vw,3rem)/1 var(--disp);animation:numpulse 3.4s ease-in-out infinite}
+  transition:color .4s ease;border-radius:50%;overflow:hidden}
+.bub .n{font:800 clamp(1.9rem,4vw,3rem)/1 var(--disp);animation:numpulse 3.4s ease-in-out infinite;position:relative}
 .b2 .n{animation-delay:1.7s}
 @keyframes numpulse{0%,100%{scale:1}50%{scale:1.05}}
 .bub .t{font:600 clamp(10.5px,1.1vw,14px)/1.4 var(--body);max-width:70%}
@@ -184,13 +194,44 @@ html.dark .venn-outline.or{stroke:rgba(111,207,227,.45)}
 .cluster.state-inner .b1,
 .cluster.state-inner .b2{color:#8a8f98}
 
-/* JOIN на окружности — всегда чёрный, и в светлой, и в тёмной теме */
+/* счётчик кликов — под шариком, вне круга */
+.hint{position:absolute;top:98%;transform:translateX(-50%);font:600 10px var(--mono);color:var(--muted);
+  opacity:.8;pointer-events:none;white-space:nowrap;z-index:3;letter-spacing:.1em}
+.hint-left{left:27%}
+.hint-right{left:73%}
+
+/* эффект вспышки-волны */
+.bub .n, .bub .t, .bub .ring-label{transition:opacity .5s ease}
+.bub.text-gone .n,
+.bub.text-gone .t,
+.bub.text-gone .ring-label{opacity:0 !important}
+
+.bub.popping{animation:bub-flash 1.06s ease}
+@keyframes bub-flash{
+  0%{scale:1}
+  30%{scale:1.04}
+  100%{scale:1}
+}
+
+.shockwave{
+  position:absolute;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  pointer-events:none;
+  z-index:5;
+}
+.shockwave.go{animation:shockwave-expand 1.06s cubic-bezier(.16,.84,.3,1) forwards}
+@keyframes shockwave-expand{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  55%{opacity:.7}
+  100%{transform:translate(-50%,-50%) scale(1);opacity:0}
+}
+
 .ring-label{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .45s;z-index:3;overflow:visible}
 .ring-label text{font-family:var(--mono);font-weight:700;font-size:6px;letter-spacing:2px;text-anchor:middle;fill:#141A22}
 .cluster.state-left .b1 .ring-label{opacity:1}
 .cluster.state-right .b2 .ring-label{opacity:1}
 
-/* INNER JOIN в центре — всегда чёрный */
 .join-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   writing-mode:vertical-rl;text-orientation:mixed;
   font:700 clamp(7px,0.85vw,9.5px) var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#141A22;
@@ -396,7 +437,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
           <circle class="ripple rl" cx="184" cy="200" r="184"/>
           <circle class="ripple rr" cx="496" cy="200" r="184"/>
         </svg>
-        <div class="bub b1">
+        <div class="bub b1" id="bubLeft">
           <svg class="ring-label" viewBox="0 0 100 100" aria-hidden="true">
             <path id="arcL" d="M 10,50 A 40,40 0 0,1 90,50" fill="none"/>
             <text><textPath href="#arcL" startOffset="50%">LEFT JOIN</textPath></text>
@@ -404,7 +445,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
           <span class="n"><span class="cnt" data-count="150" data-suffix="+">0</span></span>
           <span class="t">пользователей моих дашбордов</span>
         </div>
-        <div class="bub b2">
+        <div class="bub b2" id="bubRight">
           <svg class="ring-label" viewBox="0 0 100 100" aria-hidden="true">
             <path id="arcR" d="M 10,50 A 40,40 0 0,1 90,50" fill="none"/>
             <text><textPath href="#arcR" startOffset="50%">RIGHT JOIN</textPath></text>
@@ -413,8 +454,10 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
           <span class="t">поддерживаемых графиков и отчётов</span>
         </div>
         <span class="join-label">INNER JOIN</span>
+        <span class="hint hint-left"></span>
+        <span class="hint hint-right"></span>
       </div>
-      <div class="time-card">
+      <div class="time-card" id="timeCard">
         <div class="tc-wrap">
           <div class="tc-num"><span class="cnt" data-count="1560">0</span></div>
           <p class="tc-sub">ЧАСОВ СЭКОНОМЛЕНО РУКОВОДСТВУ ЗА 2026 ГОД</p>
@@ -473,7 +516,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FINE = window.matchMedia('(pointer: fine)').matches;
 
-  /* переключатель темы */
+  /* переключатель темы (по умолчанию тёмная) */
   var root = document.documentElement;
   var metaTheme = document.getElementById('metaTheme');
   var tBtn = document.getElementById('themeToggle');
@@ -482,6 +525,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
     if(metaTheme) metaTheme.setAttribute('content', t === 'dark' ? '#0E1116' : '#F6F7F4');
     try{ localStorage.setItem('theme', t); }catch(e){}
   }
+  applyTheme(root.classList.contains('dark') ? 'dark' : 'light');
   if(tBtn){
     tBtn.addEventListener('click', function(){
       applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
@@ -654,25 +698,135 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
     });
   }
 
-  /* состояния Венна */
-  if(FINE && !RM){
-    var clusterEl = document.getElementById('cluster');
-    var regionL = document.querySelector('.region-left');
-    var regionR = document.querySelector('.region-right');
-    var regionLens = document.querySelector('.region-lens');
-    function setState(s){
-      clusterEl.classList.remove('state-left','state-right','state-inner');
-      if(s) clusterEl.classList.add(s);
-    }
-    if(regionL) regionL.addEventListener('mouseenter', function(){ setState('state-left'); });
-    if(regionR) regionR.addEventListener('mouseenter', function(){ setState('state-right'); });
-    if(regionLens) regionLens.addEventListener('mouseenter', function(){ setState('state-inner'); });
-    if(clusterEl) clusterEl.addEventListener('mouseleave', function(){ setState(null); });
+  /* состояния Венна: hover по зоне */
+  var clusterEl = document.getElementById('cluster');
+  var bubL = document.getElementById('bubLeft');
+  var bubR = document.getElementById('bubRight');
+
+  function setState(s){
+    clusterEl.classList.remove('state-left','state-right','state-inner');
+    if(s) clusterEl.classList.add(s);
+  }
+
+  if(FINE && !RM && bubL && bubR){
+    var isInsideLens = function(e){
+      var cr = clusterEl.getBoundingClientRect();
+      var mx = ((e.clientX - cr.left) / cr.width) * 680;
+      var my = ((e.clientY - cr.top) / cr.height) * 400;
+      var d1 = Math.sqrt(Math.pow(mx-184,2) + Math.pow(my-200,2));
+      var d2 = Math.sqrt(Math.pow(mx-496,2) + Math.pow(my-200,2));
+      return d1 < 184 && d2 < 184;
+    };
+    clusterEl.addEventListener('mousemove', function(e){
+      if(clusterEl.classList.contains('state-locked')) return;
+      if(isInsideLens(e)){
+        setState('state-inner');
+      } else {
+        var cr = clusterEl.getBoundingClientRect();
+        var mx = ((e.clientX - cr.left) / cr.width) * 680;
+        if(mx < 340) setState('state-left');
+        else setState('state-right');
+      }
+    });
+    clusterEl.addEventListener('mouseleave', function(){
+      if(!clusterEl.classList.contains('state-locked')) setState(null);
+    });
+  }
+
+  /* ===== ПАСХАЛКА: вспышка-волна на 5-м клике по пузырю ===== */
+  var clickCounts = { left: 0, right: 0 };
+  var MAX_CLICKS = 5;
+  var hintL = document.querySelector('.hint-left');
+  var hintR = document.querySelector('.hint-right');
+
+  function updateHints(){
+    if(hintL){ var cl = clickCounts.left || 0; hintL.textContent = (cl > 0 && cl < MAX_CLICKS) ? cl + '/' + MAX_CLICKS : ''; }
+    if(hintR){ var cr = clickCounts.right || 0; hintR.textContent = (cr > 0 && cr < MAX_CLICKS) ? cr + '/' + MAX_CLICKS : ''; }
+  }
+
+  function popBubble(bub, side){
+    if(RM || bub.classList.contains('popping')) return;
+
+    var bubRect = bub.getBoundingClientRect();
+    var isLeft = side === 'left';
+
+    /* волна стартует из центра шара и расширяется ровно до его краёв */
+    var cx = bubRect.width/2;
+    var cy = bubRect.height/2;
+    var waveR = bubRect.width/2;
+
+    /* приглушённый градиент вспышки — цвет шарика, чуть светлее */
+    var flashGrad = isLeft
+      ? 'radial-gradient(circle, rgba(240,255,228,.55) 0%, rgba(223,250,198,.38) 45%, rgba(207,249,164,.15) 75%, rgba(207,249,164,0) 100%)'
+      : 'radial-gradient(circle, rgba(232,251,255,.55) 0%, rgba(200,244,252,.38) 45%, rgba(164,235,249,.15) 75%, rgba(164,235,249,0) 100%)';
+
+    var wave = document.createElement('div');
+    wave.className = 'shockwave';
+    wave.style.left = cx + 'px';
+    wave.style.top = cy + 'px';
+    wave.style.width = (waveR*2) + 'px';
+    wave.style.height = (waveR*2) + 'px';
+    wave.style.background = flashGrad;
+    bub.appendChild(wave);
+
+    bub.classList.add('popping');
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ wave.classList.add('go'); });
+    });
+
+    /* текст исчезает в момент прохождения волны */
+    setTimeout(function(){ bub.classList.add('text-gone'); }, 220);
+
+    /* убираем волну после завершения анимации */
+    setTimeout(function(){ wave.remove(); }, 1150);
+
+    /* регенерация текста */
+    setTimeout(function(){
+      bub.classList.remove('text-gone');
+      bub.classList.remove('popping');
+      clickCounts[side] = 0;
+      updateHints();
+    }, 2600);
+  }
+
+  if(bubL && bubR){
+    bubL.addEventListener('click', function(){
+      if(RM) return;
+      clickCounts.left = (clickCounts.left || 0) + 1;
+      updateHints();
+      if(clickCounts.left >= MAX_CLICKS){ popBubble(bubL, 'left'); }
+    });
+    bubR.addEventListener('click', function(){
+      if(RM) return;
+      clickCounts.right = (clickCounts.right || 0) + 1;
+      updateHints();
+      if(clickCounts.right >= MAX_CLICKS){ popBubble(bubR, 'right'); }
+    });
+    updateHints();
+  }
+
+  /* ===== ПАСХАЛКА: 5 кликов по плашке 1560 → имя переливается градиентом ===== */
+  var timeCard = document.getElementById('timeCard');
+  var nameScr = document.getElementById('scr');
+  var timeClicks = 0;
+  var nameGradActive = false;
+  if(timeCard && nameScr){
+    timeCard.addEventListener('click', function(){
+      timeClicks++;
+      if(timeClicks >= 5){
+        timeClicks = 0;
+        nameGradActive = !nameGradActive;
+        nameScr.classList.toggle('name-gradient', nameGradActive);
+      }
+    });
   }
 
   /* пасхалка в консоли */
-  console.log('%c ПРИВЕТ, ЛЮБОПЫТНЫЙ ', 'background:#CFF9A4;color:#1D3509;font-weight:700;font-size:13px;padding:4px 10px;border-radius:6px');
-  console.log('%cРаз ты открыл консоль — нам точно есть о чём поговорить.\nБизнес-аналитик · Collection · Сбер\ntg: @m3owboy · почта: m3owboy@yandex.ru', 'color:#6BA02B;font-size:11px;line-height:1.6');
+  console.log(
+    '%c Привет! Быстрее всего отвечаю в tg: %c@m3owboy ',
+    'background:#A4EBF9;color:#083746;font-weight:600;font-size:13px;padding:8px 4px 8px 14px;border-radius:8px 0 0 8px;font-family:system-ui,sans-serif',
+    'background:#A4EBF9;color:#141A22;font-weight:800;font-size:14px;padding:8px 14px 8px 4px;border-radius:0 8px 8px 0;font-family:"JetBrains Mono",monospace;letter-spacing:.5px'
+  );
 })();
 </script>
 </body>
