@@ -288,28 +288,6 @@ html.dark .u-card p{color:#AEB8C4}
   opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:3000;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.modal-backdrop{position:fixed;inset:0;background:rgba(14,17,22,.75);backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);z-index:2500;display:flex;align-items:center;justify-content:center;padding:16px;
-  opacity:0;pointer-events:none;transition:opacity .3s ease}
-.modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:620px;width:100%;
-  padding:32px;box-shadow:0 24px 64px rgba(0,0,0,.45);transform:translateY(16px);transition:transform .3s ease;position:relative;
-  max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.modal-backdrop.open .modal{transform:translateY(0)}
-.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
-  border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 16px var(--mono);color:var(--muted);background:var(--panel);z-index:10}
-.modal-close:hover{color:var(--text);border-color:var(--text)}
-.modal h2{font:800 1.25rem var(--disp);margin-bottom:8px;padding-right:32px}
-.modal-sub{font:600 10px var(--mono);color:var(--cyan-deep);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
-html.dark .modal-sub{color:var(--cyan-text)}
-.modal-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:24px;font-size:.9rem;line-height:1.55;color:#3c4657}
-html.dark .modal-list{color:#AEB8C4}
-.modal-list li{padding-left:18px;position:relative}
-.modal-list li b{color:var(--text)}
-.modal-list li::before{content:'▸';position:absolute;left:0;color:var(--lime-deep);font-weight:700}
-html.dark .modal-list li::before{color:var(--lime-text)}
-.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
 footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);background:var(--panel);padding:24px 0;
   transition:background-color .45s ease,border-color .45s ease}
 .fbar{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap;font:500 11px var(--mono);letter-spacing:.08em;color:var(--muted)}
@@ -324,7 +302,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
 /* ======= PRINT STYLES ======= */
 @media print {
   body { background: #fff !important; color: #000 !important; font-size: 11pt !important; }
-  .deco-wrap, .top-controls, #themeToggle, .join-tabs, .modal-backdrop, .toast, .cft, .btn, footer { display: none !important; }
+  .deco-wrap, .top-controls, #themeToggle, .join-tabs, .toast, .cft, .btn, footer { display: none !important; }
   .hero { display: block !important; padding: 20px 0 !important; }
   h1 { font-size: 24pt !important; color: #000 !important; }
   .kick, .sub { margin-bottom: 10px !important; color: #333 !important; }
@@ -366,7 +344,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
   .wrap{padding:0 16px} 
   h1{font-size:clamp(1.9rem,8vw,2.6rem)} 
   .hero{gap:32px;padding:52px 0 0}
-  .cta, .modal-actions{grid-template-columns:1fr;gap:10px} 
+  .cta{grid-template-columns:1fr;gap:10px} 
   .btn{padding:14px 20px;width:100%} 
   .status-pill span{display:none} 
   .top-controls{top:12px;right:12px}
@@ -374,7 +352,6 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
   .time-card{padding:20px 16px}
   .tc-num{font-size:clamp(2.4rem,7vw,3.2rem)}
   .u-card{padding:24px 20px}
-  .modal{padding:24px}
   .fbar{justify-content:center;text-align:center;gap:12px}
   .f-links{justify-content:center;width:100%;gap:16px}
   .tagline{font-size:10px}
@@ -418,7 +395,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
       <div class="cta">
         <a class="btn solid" href="https://t.me/m3owboy" target="_blank" rel="noopener">TELEGRAM <span class="dm">✦</span> @m3owboy</a>
         <button class="btn mail" id="btnCopyMail" type="button" data-email="m3owboy@yandex.ru">ПОЧТА <span class="dm">❐</span> m3owboy@yandex.ru</button>
-        <button class="btn resume" id="btnOpenResume" type="button">РЕЗЮМЕ И КЕЙСЫ В 1 КЛИК <span class="dm">→</span></button>
+        <a class="btn resume" id="btnDownloadResume" href="resume.pdf" download="Иванчук_Михаил_Резюме.pdf">СКАЧАТЬ РЕЗЮМЕ <span class="dm">↓</span></a>
       </div>
 
       <div id="printLinks">
@@ -562,24 +539,6 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
     </span>
   </div>
 </footer>
-
-<!-- Модальное окно Резюме -->
-<div class="modal-backdrop" id="resumeModal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
-    <p class="modal-sub">Executive Summary · Михаил Иванчук</p>
-    <h2 id="modalTitle">Профиль и ключевые компетенции</h2>
-    <ul class="modal-list">
-      <li><b>Доменная экспертиза:</b> 2+ года в банковском Collection / урегулировании розничной просрочки (Сбербанк). Понимание экономики взыскания, воронки урегулирования и метрик риска.</li>
-      <li><b>Работа с данными (SQL & BI):</b> построение витрин, когортный анализ, проверка гипотез, разработка дашбордов с нуля для 150+ пользователей.</li>
-      <li><b>Автоматизация (Python & Excel):</b> перевод ручной отчетности на автоматические рельсы (1 560 часов экономии в год), создание умных таблиц с валидацией и дашбордами.</li>
-    </ul>
-    <div class="modal-actions">
-      <a class="btn solid" href="https://t.me/m3owboy?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%82%D0%B2%D0%BE%D0%B5%D0%B3%D0%BE%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0-%D0%B2%D0%B8%D0%B7%D0%B8%D1%82%D0%BA%D0%B8%2C%20%D0%BF%D1%80%D0%B8%D1%88%D0%BB%D0%B8%2C%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0%2C%20%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D0%B5%D0%B7%D1%8E%D0%BC%D0%B5." target="_blank" rel="noopener">НАПИСАТЬ В TELEGRAM →</a>
-      <a class="btn mail" href="mailto:m3owboy@yandex.ru?subject=Запрос%20полного%20резюме%20—%20Михаил%20Иванчук">ЗАПРОСИТЬ ПО ПОЧТЕ ✉</a>
-    </div>
-  </div>
-</div>
 
 <script>
 (function(){
@@ -793,31 +752,17 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
     });
   }
 
-  /* Модальное окно резюме */
-  var modal = document.getElementById('resumeModal');
-  var btnOpenResume = document.getElementById('btnOpenResume');
-  var modalClose = document.getElementById('modalClose');
-  if(btnOpenResume && modal){
-    btnOpenResume.addEventListener('click', function(e){
-      burstConfetti(e.clientX, e.clientY, ['#A4EBF9','#CFF9A4','#5BC8DE','#94DE4E']);
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
+  /* Конфетти при скачивании резюме и переходе в Telegram */
+  var btnDownloadResume = document.getElementById('btnDownloadResume');
+  if(btnDownloadResume){
+    btnDownloadResume.addEventListener('click', function(e){
+      burstConfetti(e.clientX, e.clientY, ['#A4EBF9','#CFF9A4','#5BC8DE','#94DE4E','#FFFFFF']);
     });
-    modalClose.addEventListener('click', function(){
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-    });
-    modal.addEventListener('click', function(e){
-      if(e.target === modal){
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-      }
-    });
-    window.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && modal.classList.contains('open')){
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-      }
+  }
+  var btnTg = document.querySelector('.btn.solid');
+  if(btnTg){
+    btnTg.addEventListener('click', function(e){
+      burstConfetti(e.clientX, e.clientY, ['#A4EBF9','#8FD9EC','#5BC8DE','#CFF9F9','#E8FBFF']);
     });
   }
 
@@ -953,7 +898,7 @@ footer{flex:none;position:relative;z-index:5;border-top:1px solid var(--line);ba
   }
 
   /* Консольная пасхалка */
-  console.log(" Быстрее всего я отвечаю в телеграмме @m3owboy ", "background:#CFF9A4;color:#1D3509;padding:6px 12px;border-radius:6px;font-weight:bold;font-family:sans-serif;font-size:13px;");
+  console.log("%c \u2728 Быстрее всего я отвечаю в телеграмме @m3owboy ", "background:#CFF9A4;color:#1D3509;padding:6px 12px;border-radius:6px;font-weight:bold;font-family:sans-serif;font-size:13px;");
   
   var profileJson = {
     "id": "m_ivanchuk",
